@@ -1,4 +1,4 @@
-package Tamagochi;
+package tamagochi;
 
 import java.util.HashMap;
 import java.util.Map;

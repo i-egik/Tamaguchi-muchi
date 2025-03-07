@@ -1,4 +1,4 @@
-package Tamagochi;
+package tamagochi;
 
 public class Stats {
     public enum stats{
