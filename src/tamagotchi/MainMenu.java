@@ -10,6 +10,7 @@ public class MainMenu {
         while (!"exit".equals(inputer)) {
             inputer = input.nextLine().trim().toLowerCase();
         }
+
     }
     //вылечить нет действия
     // помыть нет действия

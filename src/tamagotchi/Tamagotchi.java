@@ -3,7 +3,7 @@ package tamagotchi;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Tamagotchi implements Control {
+public class Tamagotchi implements Control, Model {
     private final RangeValue health = new RangeValue(2, 10);
     private final RangeValue hunger = new RangeValue(2, 10);
     private final RangeValue energy = new RangeValue(2, 10);
@@ -48,6 +48,11 @@ public class Tamagotchi implements Control {
     @Override
     public void toHeal() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Status getStatus() {
+        return new Status(health.value, hunger.value, energy.value, happiness.value, weight.value > weight.maximum, dirty.value < dirty.critical);
     }
 
     //0         - end
