@@ -21,7 +21,7 @@ public interface Control {
             SNACK, MEAL
         }
 
-        record Value(int heals, int hanger, int weight, int happiness) {
+        record Value(int heals, int hunger, int weight, int happiness) {
 
         }
     }

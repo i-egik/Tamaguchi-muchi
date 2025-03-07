@@ -5,18 +5,22 @@ import java.util.Map;
 
 public class Tamagotchi implements Control {
     private final RangeValue health = new RangeValue(2, 10);
-    private final RangeValue hanger = new RangeValue(2, 10);
+    private final RangeValue hunger = new RangeValue(2, 10);
     private final RangeValue energy = new RangeValue(2, 10);
     private final RangeValue happiness = new RangeValue(2, 10);
     private final RangeValue weight = new RangeValue(2, 10);
     private final RangeValue dirty = new RangeValue(6, 10);
     //NOTICE: Возможно надо преобразовать также к RangeValue
     private boolean ill = false;
-    Map<Stats, Integer> tamagochiStats = new HashMap<>();
+    Map<Stats, Integer> tamagotchiStats = new HashMap<>();
 
     @Override
     public void toFeed(Food food) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Food.Value value = food.value();
+        health.incrementDelta(value.heals());
+        hunger.incrementDelta(value.hunger());
+        weight.incrementDelta(value.weight());
+        happiness.incrementDelta(value.happiness());
     }
 
     @Override
@@ -33,9 +37,12 @@ public class Tamagotchi implements Control {
         }
     }
 
+    //FIXME: Сделать шедулер на 1 минуту и в течение 1 минуты смотреть спим или не спим
     @Override
     public void toSleep() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (energy.value < energy.maximum) {
+
+        }
     }
 
     @Override
