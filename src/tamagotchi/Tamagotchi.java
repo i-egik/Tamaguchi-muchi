@@ -12,7 +12,6 @@ public class Tamagotchi implements Control, Model {
     private final RangeValue dirty = new RangeValue(6, 10);
     //NOTICE: Возможно надо преобразовать также к RangeValue
     private boolean ill = false;
-    Map<Stats, Integer> tamagotchiStats = new HashMap<>();
 
     @Override
     public void toFeed(Food food) {
