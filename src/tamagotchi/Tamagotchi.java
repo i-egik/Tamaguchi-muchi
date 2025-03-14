@@ -1,8 +1,5 @@
 package tamagotchi;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Tamagotchi implements Control, Model {
     private final RangeValue health = new RangeValue(2, 10);
     private final RangeValue hunger = new RangeValue(2, 10);
@@ -12,6 +9,15 @@ public class Tamagotchi implements Control, Model {
     private final RangeValue dirty = new RangeValue(6, 10);
     //NOTICE: Возможно надо преобразовать также к RangeValue
     private boolean ill = false;
+
+    public Tamagotchi() {
+        health.value = 5;
+        hunger.value = 5;
+        energy.value = 5;
+        happiness.value = 5;
+        weight.value = 5;
+        dirty.value = 10;
+    }
 
     @Override
     public void toFeed(Food food) {
@@ -46,7 +52,9 @@ public class Tamagotchi implements Control, Model {
 
     @Override
     public void toHeal() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (health.value < health.maximum) {
+            health.increment();
+        }
     }
 
     @Override

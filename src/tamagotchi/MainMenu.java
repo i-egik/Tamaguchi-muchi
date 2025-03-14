@@ -17,7 +17,10 @@ public class MainMenu {
         try (Scanner input = new Scanner(System.in)) {
             while (true) {
                 Model.Status status = model.getStatus();
-                System.out.printf("\n");
+                System.out.printf("| Ht | Hg | Hs | Eg | Dt | Ft |\n");
+                System.out.printf("|%3d |%3d |%3d |%3d | %s  | %s  |\n",
+                        status.health(), status.hanger(), status.happiness(),
+                        status.energy(), status.dirty() ? "D" : "N", status.fatty() ? "F" : "N");
                 System.out.println("0. exit");
                 for (int i = 0; i < MENUS.length; i++) {
                     System.out.printf("%d. %s\n", i + 1, MENUS[i].name);
@@ -64,26 +67,7 @@ public class MainMenu {
             }
         }
 
-        private static final class Item {
-            private final String name;
-            private final Consumer<Control> action;
-
-            private Item(String name, Consumer<Control> action) {
-                this.name = name;
-                this.action = action;
-            }
+        private record Item(String name, Consumer<Control> action) {
         }
     }
-    //вылечить нет действия
-    // помыть нет действия
-    // покормить -- выбор жрачки
-    // поиграть -- выбор игры
-
-    //вылечить  1
-    // помыть 2
-    // покормить снеками 3
-    // покормить норм хавкой 4
-    // поиграть в угадай число 5
-    //поиграть в литрболл  6
-    //......
 }
