@@ -22,11 +22,11 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
             this.value = value;
         }
 
-        private void reset () {
+        private void reset() {
             this.counter = 0;
         }
 
-        private void tick () {
+        private void tick() {
             this.counter++;
             if (counter > barier) {
                 reset();
@@ -43,7 +43,11 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
     @Override
     public void tick5Mins() {
         cHunger.tick();
+        if (hunger.isCritical()) {
+            health.decrement();
+        }
     }
+
 
     public Tamagotchi() {
         health.value = 5;
@@ -109,6 +113,10 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
         public RangeValue(int critical, int maximum) {
             this.critical = critical;
             this.maximum = maximum;
+        }
+
+        public boolean isCritical() {
+            return value <= critical;
         }
 
         public void increment() {
