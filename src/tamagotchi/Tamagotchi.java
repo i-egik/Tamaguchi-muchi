@@ -37,12 +37,7 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
     }
 
     @Override
-    public void tickSecond() {
-
-    }
-
-    @Override
-    public void tick5Mins() {
+    public void tick() {
         cHunger.tick();
         if (hunger.isCritical() || ill) {
             health.decrement();
@@ -72,6 +67,11 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
         happiness.value = 5;
         weight.value = 5;
         dirty.value = 10;
+    }
+
+    @Override
+    public void pauseToggle(){
+        //TODO
     }
 
     @Override

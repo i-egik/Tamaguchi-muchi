@@ -12,6 +12,8 @@ public interface Control {
 
     void toHeal();
 
+    void pauseToggle();
+
     interface Food {
 
         Kind kind();

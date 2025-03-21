@@ -10,6 +10,7 @@ public class MainMenu {
             new Menu("feed"),
             new Menu("games"),
             new Menu("sleep", Control::toSleep),
+            new Menu("pause", Control::pauseToggle)
     };
 
     public void start(Control control, Model model) {

@@ -16,10 +16,9 @@ public class GameCircle {
         AtomicInteger counter = new AtomicInteger(0);
         service.scheduleWithFixedDelay(() -> {
             if (running.get()) {
-                ticker.tickSecond();
                 counter.incrementAndGet();
                 if (counter.intValue() == 5 * 60) {
-                    ticker.tick5Mins();
+                    ticker.tick();
                     counter.set(0);
                 }
             }
@@ -34,9 +33,16 @@ public class GameCircle {
         running.set(false);
     }
 
-    public interface Ticker {
-        void tickSecond();
-
-        void tick5Mins();
+    public void toggle(){
+        if(running.get()){
+            pause();
+        } else {
+            start();
+        }
     }
+
+    public interface Ticker {
+        void tick();
+    }
+
 }
