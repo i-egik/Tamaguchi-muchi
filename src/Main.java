@@ -8,3 +8,4 @@ public class Main {
         mainMenu.start(tamagotchi, tamagotchi);
     }
 }
+//TODO: реализовть: жрачку, болячку, игрища, и засирание
