@@ -1,14 +1,49 @@
 package tamagotchi;
 
-public class Tamagotchi implements Control, Model {
+public class Tamagotchi implements Control, Model, GameCircle.Ticker {
     private final RangeValue health = new RangeValue(2, 10);
     private final RangeValue hunger = new RangeValue(2, 10);
     private final RangeValue energy = new RangeValue(2, 10);
     private final RangeValue happiness = new RangeValue(2, 10);
     private final RangeValue weight = new RangeValue(2, 10);
     private final RangeValue dirty = new RangeValue(6, 10);
+    private final RangeCounter cHunger = new RangeCounter(1, hunger);
+
     //NOTICE: Возможно надо преобразовать также к RangeValue
     private boolean ill = false;
+
+    private static final class RangeCounter {
+        private final int barier;
+        private final RangeValue value;
+        private int counter;
+
+        private RangeCounter(int barier, RangeValue value) {
+            this.barier = barier;
+            this.value = value;
+        }
+
+        private void reset () {
+            this.counter = 0;
+        }
+
+        private void tick () {
+            this.counter++;
+            if (counter > barier) {
+                reset();
+                value.decrement();
+            }
+        }
+    }
+
+    @Override
+    public void tickSecond() {
+
+    }
+
+    @Override
+    public void tick5Mins() {
+        cHunger.tick();
+    }
 
     public Tamagotchi() {
         health.value = 5;
@@ -82,6 +117,14 @@ public class Tamagotchi implements Control, Model {
 
         public void incrementDelta(int delta) {
             value += delta;
+        }
+
+        public void toBeHunger(RangeValue hunger) {
+
+        }
+
+        public void decrement() {
+            value--;
         }
     }
 }
