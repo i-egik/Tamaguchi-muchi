@@ -11,6 +11,7 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
 
     //NOTICE: Возможно надо преобразовать также к RangeValue
     private boolean ill = false;
+    private boolean isSleep = false;
 
     private static final class RangeCounter {
         private final int barier;
@@ -43,11 +44,26 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
     @Override
     public void tick5Mins() {
         cHunger.tick();
-        if (hunger.isCritical()) {
+        if (hunger.isCritical() || ill) {
             health.decrement();
         }
-    }
 
+        if (hunger.isMoreMaximum()) {
+            weight.increment();
+        }
+
+        if (dirty.isCritical() || weight.isMoreMaximum() || weight.isCritical()) {
+            ill = true;
+        }
+
+        if (isSleep) {
+            energy.increment();
+        }
+
+        if (happiness.isMoreMaximum()) {
+            energy.decrement();
+        }
+    }
 
     public Tamagotchi() {
         health.value = 5;
@@ -84,9 +100,7 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
     //FIXME: Сделать шедулер на 1 минуту и в течение 1 минуты смотреть спим или не спим
     @Override
     public void toSleep() {
-        if (energy.value < energy.maximum) {
-
-        }
+        isSleep = true;
     }
 
     @Override
@@ -117,6 +131,10 @@ public class Tamagotchi implements Control, Model, GameCircle.Ticker {
 
         public boolean isCritical() {
             return value <= critical;
+        }
+
+        public boolean isMoreMaximum() {
+            return value > maximum;
         }
 
         public void increment() {
