@@ -1,12 +1,16 @@
 package tamagotchi.ui;
 
+import tamagotchi.GameCircle;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class MainWindow extends JFrame {
+    private final DrawingPanel drawingPanel;
 
     public MainWindow(PixelPanel pixelPanel) {
         setTitle("Tamagotchi");
@@ -24,15 +28,12 @@ public final class MainWindow extends JFrame {
         buttonPanel.add(execute);
         buttonPanel.add(cancel);
 
-        DrawingPanel drawingPanel = new DrawingPanel(pixelPanel);
+        drawingPanel = new DrawingPanel(pixelPanel);
         add(drawingPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         select.addActionListener(e -> {
             //TODO:
-            PixelPanel[] pixelPanels = Sprite.EGG.pixelPanels();
-            pixelPanels[0].copy(pixelPanel);
-            drawingPanel.repaint();
         });
 
         execute.addActionListener(e -> {
@@ -46,7 +47,32 @@ public final class MainWindow extends JFrame {
 
     public static void main(String[] args) {
         PixelPanel pixelPanel = new PixelPanel(16, 32);
-        SwingUtilities.invokeLater(() -> new MainWindow(pixelPanel).setVisible(true));
+        PixelPanel[] pixelPanels = Sprite.EGG.pixelPanels();
+        AtomicInteger counter = new AtomicInteger(0);
+        MainWindow window = new MainWindow(pixelPanel);
+        GameCircle circle = new GameCircle(new GameCircle.Ticker() {
+            @Override
+            public void tick() {
+
+            }
+
+            @Override
+            public void signal() {
+                pixelPanels[counter.intValue()].copy(pixelPanel);
+                counter.incrementAndGet();
+                if (counter.intValue() > 1) {
+                    counter.set(0);
+                }
+                window.update();
+            }
+        });
+        circle.start();
+
+        SwingUtilities.invokeLater(() -> window.setVisible(true));
+    }
+
+    public void update() {
+        drawingPanel.repaint();
     }
 
     public interface DrawingImage {

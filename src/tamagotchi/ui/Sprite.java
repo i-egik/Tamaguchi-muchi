@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public enum Sprite {
-    EGG("egg", 1);
+    EGG("egg", 1, 2);
     private final String name;
     private final int[] nums;
 
