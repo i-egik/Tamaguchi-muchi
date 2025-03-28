@@ -8,6 +8,34 @@ public final class PixelPanel {
     private final boolean[] pixels;
     private boolean changed = true;
 
+    enum Position {
+        CENTRAL,
+        LEFT,
+        RIGHT,
+        DOWN,
+        UP;
+
+        private Coordinate getCoordinate(PixelPanel source, PixelPanel target) {
+            switch (this) {
+                case CENTRAL:
+                    return new Coordinate(target.width / 2 - source.width / 2, target.height / 2 - source.height / 2) ;
+                case LEFT:
+                    return new Coordinate(target.width - source.width, target.height / 2 - source.height / 2) ;
+                case RIGHT:
+                    break;
+                case DOWN:
+                    break;
+                case UP:
+                    break;
+                default:
+                    break;
+            }
+            throw new UnsupportedOperationException("unhandled position \"this\"");
+        }
+    }
+
+    private record Coordinate (int x, int y) {}
+
     public PixelPanel(int height, int width) {
         this.height = height;
         this.width = width;
@@ -41,10 +69,11 @@ public final class PixelPanel {
         panel.changed = true;
     }
 
-    public void insert(PixelPanel into) {
+    public void insert(PixelPanel into, Position position) {
+        var offset = position.getCoordinate(this, into);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                into.set(x, y, get(x, y));
+                into.set(x + offset.x, y + offset.y, get(x, y));
             }
         }
     }
