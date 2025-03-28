@@ -20,13 +20,13 @@ public final class PixelPanel {
                 case CENTRAL:
                     return new Coordinate(target.width / 2 - source.width / 2, target.height / 2 - source.height / 2) ;
                 case LEFT:
-                    return new Coordinate(target.width - source.width, target.height / 2 - source.height / 2) ;
+                    return new Coordinate(0, target.height / 2 - source.height / 2) ;
                 case RIGHT:
-                    break;
+                    return new Coordinate(target.width - source.width, target.height / 2 - source.height / 2);
                 case DOWN:
-                    break;
+                    return new Coordinate(target.width / 2 - source.width / 2, target.height - source.height) ;
                 case UP:
-                    break;
+                    return new Coordinate(target.width / 2 - source.width / 2, 0) ; //FIXME: не отступает 1 пиксель сверху
                 default:
                     break;
             }
@@ -78,3 +78,5 @@ public final class PixelPanel {
         }
     }
 }
+
+

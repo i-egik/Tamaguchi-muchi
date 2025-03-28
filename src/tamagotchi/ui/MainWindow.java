@@ -15,7 +15,7 @@ public final class MainWindow extends JFrame {
     public MainWindow(PixelPanel pixelPanel) {
         setTitle("Tamagotchi");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 230);
+        setSize(500, 400);
         setLocationRelativeTo(null);
         setResizable(false);
 
@@ -59,7 +59,7 @@ public final class MainWindow extends JFrame {
             @Override
             public void signal() {
                 pixelPanel.clean();
-                pixelPanels[counter.intValue()].insert(pixelPanel, PixelPanel.Position.CENTRAL);
+                pixelPanels[1].insert(pixelPanel, PixelPanel.Position.UP);
                 counter.incrementAndGet();
                 if (counter.intValue() > 1) {
                     counter.set(0);
