@@ -20,7 +20,8 @@ public enum Sprite {
         for (int i = 0; i < nums.length; i++) {
             try (var stream = Sprite.class.getResourceAsStream(String.format("/sprites/%s_%d.txt", name, nums[i]));
                  var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(stream)))) {
-                PixelPanel panel = new PixelPanel(16, 32);
+                String[] parts = reader.readLine().trim().split(":");
+                PixelPanel panel = new PixelPanel(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
                 for (int k = 0; k < panel.height; k++) {
                     String line = reader.readLine();
                     for (int j = 0; j < panel.width; j++) {
