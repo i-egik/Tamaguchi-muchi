@@ -1,5 +1,7 @@
 package tamagotchi.ui;
 
+import java.util.Arrays;
+
 public final class PixelPanel {
     public final int height;
     public final int width;
@@ -29,8 +31,21 @@ public final class PixelPanel {
         changed = false;
     }
 
+    public void clean() {
+        Arrays.fill(pixels, false);
+        changed = true;
+    }
+
     public void copy(PixelPanel panel) {
         System.arraycopy(pixels, 0, panel.pixels, 0, pixels.length);
         panel.changed = true;
+    }
+
+    public void insert(PixelPanel into) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                into.set(x, y, get(x, y));
+            }
+        }
     }
 }

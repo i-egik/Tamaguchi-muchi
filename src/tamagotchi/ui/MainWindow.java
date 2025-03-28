@@ -58,7 +58,8 @@ public final class MainWindow extends JFrame {
 
             @Override
             public void signal() {
-                pixelPanels[counter.intValue()].copy(pixelPanel);
+                pixelPanel.clean();
+                pixelPanels[counter.intValue()].insert(pixelPanel);
                 counter.incrementAndGet();
                 if (counter.intValue() > 1) {
                     counter.set(0);
